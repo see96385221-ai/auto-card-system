@@ -81,3 +81,50 @@ model AdminLog {
 
   @@map("admin_logs")
 }
+  @@map("cards")
+}
+
+model Order {
+  id          String    @id @default(cuid())
+  orderNo     String    @unique @map("order_no") // CARD20260405001
+  email       String
+  productId   String    @map("product_id")
+  amount      Decimal   @db.Decimal(10, 2)
+  cardType    String    @map("card_type")
+  payMethod   String?   @map("pay_method") // alipayhk, wechatpay, fps, payme
+  payStatus   Int       @default(0) @map("pay_status") // 0=未支付, 1=已支付, 2=已取消
+  cardId      String?   @map("card_id")
+  paidAt      DateTime? @map("paid_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  product     Product   @relation(fields: [productId], references: [id])
+  card        Card?
+
+  @@index([orderNo])
+  @@index([payStatus])
+  @@map("orders")
+}
+
+model PayLog {
+  id          String   @id @default(cuid())
+  orderNo     String   @map("order_no")
+  amount      Decimal  @db.Decimal(10, 2)
+  method      String   // 支付方式
+  verified    Boolean  @default(false)
+  verifiedAt  DateTime? @map("verified_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([orderNo])
+  @@map("pay_logs")
+}
+
+model AdminLog {
+  id          String   @id @default(cuid())
+  action      String   // import_cards, manual_confirm, etc.
+  details     String?
+  ip          String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("admin_logs")
+}
