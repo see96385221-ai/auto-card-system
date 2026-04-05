@@ -1,0 +1,40 @@
+{
+  "name": "auto-card-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@prisma/client": "^5.10.0",
+    "prisma": "^5.10.0",
+    "resend": "^3.2.0",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.2.0",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1",
+    "react-hot-toast": "^2.4.1",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/qrcode": "^1.5.5",
+    "@types/uuid": "^9.0.8",
+    "typescript": "^5.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.2.0"
+  }
+}
