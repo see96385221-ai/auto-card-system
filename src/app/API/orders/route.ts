@@ -115,3 +115,58 @@ export async function GET(req: NextRequest) {
     )
   }
 }
+    })
+  } catch (error) {
+    console.error('創建訂單失敗:', error)
+    return NextResponse.json(
+      { success: false, message: '創建訂單失敗' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url)
+    const orderNo = searchParams.get('orderNo')
+
+    if (!orderNo) {
+      return NextResponse.json(
+        { success: false, message: '缺少訂單號' },
+        { status: 400 }
+      )
+    }
+
+    const order = await prisma.order.findUnique({
+      where: { orderNo },
+      include: { product: true, card: true }
+    })
+
+    if (!order) {
+      return NextResponse.json(
+        { success: false, message: '訂單不存在' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: {
+        orderNo: order.orderNo,
+        payStatus: order.payStatus,
+        amount: Number(order.amount),
+        cardType: order.cardType,
+        duration: order.product?.duration,
+        cardCode: order.card ? decryptCard(order.card.cardCode) : null,
+        paidAt: order.paidAt,
+        createdAt: order.createdAt
+      }
+    })
+  } catch (error) {
+    console.error('查詢訂單失敗:', error)
+    return NextResponse.json(
+      { success: false, message: '查詢訂單失敗' },
+      { status: 500 }
+    )
+  }
+}
