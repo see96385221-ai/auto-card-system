@@ -58,7 +58,6 @@ export async function POST(req: NextRequest) {
         where: { id: card.id },
         data: {
           status: 1,
-          orderId: order.id,
           usedAt: new Date()
         }
       }),
