@@ -63,7 +63,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const uniqueCodes = [...new Set(codes.map(c => c.trim()).filter(c => c))]
+    const uniqueCodes = Array.from(new Set(codes.map(c => c.trim()).filter(c => c)))
+    
     const encryptedCodes = uniqueCodes.map(code => ({
       cardCode: encryptCard(code),
       cardType,
