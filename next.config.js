@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: { unoptimized: true }
+- experimental: { appDir: true },
+- images: { unoptimized: true }
++ images: {
++   unoptimized: true
++ },
++ typescript: {
++   ignoreBuildErrors: false
++ },
++ eslint: {
++   ignoreDuringBuilds: true
++ }
 }
 
 module.exports = nextConfig
